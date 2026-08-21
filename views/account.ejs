@@ -1,0 +1,255 @@
+<%- include('./partials/header') %>
+
+<div class="w-full min-h-screen flex items-start px-20 py-20">
+
+    <!-- LEFT SIDEBAR -->
+
+    <div class="w-[25%] flex flex-col items-start">
+
+        <div class="flex flex-col">
+
+            <a
+                class="block w-fit mb-2"
+                href="/shop"
+            >
+                Shop
+            </a>
+
+            <a
+                class="block w-fit mb-2"
+                href="/cart"
+            >
+                My Cart
+            </a>
+
+            <a
+                class="block w-fit mb-2 text-red-500"
+                href="/logout"
+            >
+                Logout
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- MAIN CONTENT -->
+
+    <div class="w-[75%] flex flex-col gap-8">
+
+        <h1 class="text-3xl font-semibold">
+            My Account
+        </h1>
+
+
+        <!-- ACCOUNT INFORMATION -->
+
+        <div class="w-full bg-zinc-100 rounded-md p-6">
+
+            <h2 class="text-xl font-semibold mb-5">
+                Account Information
+            </h2>
+
+            <div class="flex flex-col gap-3">
+
+                <p>
+                    <strong>Name:</strong>
+                    <%= user.fullname %>
+                </p>
+
+                <p>
+                    <strong>Email:</strong>
+                    <%= user.email %>
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- MY CART -->
+
+        <div class="flex items-center justify-between">
+
+            <h2 class="text-2xl font-semibold">
+                My Cart
+            </h2>
+
+            <a
+                href="/cart"
+                class="text-blue-500 hover:underline"
+            >
+                View Cart
+            </a>
+
+        </div>
+
+
+        <!-- CART PRODUCTS -->
+
+        <div class="flex flex-wrap items-start gap-5">
+
+            <%
+                /*
+                 * GROUP DUPLICATE PRODUCTS
+                 *
+                 * If cart contains:
+                 *
+                 * Bag
+                 * Bag
+                 * Shoes
+                 *
+                 * It becomes:
+                 *
+                 * Bag x 2
+                 * Shoes x 1
+                 */
+
+                const cartItems = [];
+
+                if (user.cart && user.cart.length > 0) {
+
+                    user.cart.forEach(function(product) {
+
+                        const existingProduct = cartItems.find(function(item) {
+
+                            return item.product._id.toString() ===
+                                   product._id.toString();
+
+                        });
+
+                        if (existingProduct) {
+
+                            existingProduct.quantity += 1;
+
+                        } else {
+
+                            cartItems.push({
+                                product: product,
+                                quantity: 1
+                            });
+
+                        }
+
+                    });
+
+                }
+            %>
+
+
+            <% if (cartItems.length > 0) { %>
+
+
+                <% cartItems.forEach(function(item) { %>
+
+                    <%
+                        const product = item.product;
+                        const quantity = item.quantity;
+                    %>
+
+
+                    <!-- PRODUCT CARD -->
+
+                    <div
+                        class="w-60 rounded-md overflow-hidden"
+                        style="background-color: <%= product.panelcolor %>;"
+                    >
+
+
+                        <!-- PRODUCT IMAGE -->
+
+                        <div
+                            class="w-full h-52 flex items-center justify-center"
+                            style="background-color: <%= product.bgcolor %>;"
+                        >
+
+                            <% if (product.image) { %>
+
+                                <img
+                                    class="h-[12rem] max-w-full object-contain"
+                                    src="data:image/jpeg;base64,<%= product.image.toString('base64') %>"
+                                    alt="<%= product.name %>"
+                                >
+
+                            <% } else { %>
+
+                                <div class="text-gray-500">
+                                    No Image
+                                </div>
+
+                            <% } %>
+
+                        </div>
+
+
+                        <!-- PRODUCT INFORMATION -->
+
+                        <div
+                            class="flex justify-between items-center px-4 py-4"
+                            style="color: <%= product.textcolor %>;"
+                        >
+
+                            <div>
+
+                                <h3 class="text-lg font-medium">
+                                    <%= product.name %>
+                                </h3>
+
+                                <h4 class="text-sm">
+                                    ₹ <%= Number(product.price).toFixed(2) %>
+                                </h4>
+
+                            </div>
+
+
+                            <!-- QUANTITY -->
+
+                            <div
+                                class="px-2 py-1 rounded-full bg-white text-black"
+                            >
+
+                                <%= quantity %>
+
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+
+                <% }) %>
+
+
+            <% } else { %>
+
+
+                <!-- EMPTY CART -->
+
+                <div class="w-full bg-zinc-100 rounded-md p-6">
+
+                    <h3 class="text-lg">
+                        Your cart is empty.
+                    </h3>
+
+                    <a
+                        href="/shop"
+                        class="inline-block mt-3 text-blue-500"
+                    >
+                        Start Shopping
+                    </a>
+
+                </div>
+
+
+            <% } %>
+
+
+        </div>
+
+    </div>
+
+</div>
+
+<%- include('./partials/footer') %>

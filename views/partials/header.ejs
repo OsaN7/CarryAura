@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>CarryAura | Premium Bags</title>
+
+
+    <!-- Remix Icons -->
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css"
+        rel="stylesheet"
+    >
+
+
+    <!-- Tailwind -->
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+</head>
+
+
+<body class="font-['Helvetica_Now_Display'] bg-[#faf9f7] text-[#27221f]">
+
+
+    <!-- NAVBAR -->
+
+    <nav
+        class="w-full h-20 px-8 lg:px-12 flex items-center justify-between bg-white/90 backdrop-blur-md border-b border-gray-100 sticky top-0 z-50"
+    >
+
+
+        <!-- BRAND -->
+
+        <a
+            href="/"
+            class="flex items-center gap-3"
+        >
+
+            <div
+                class="w-10 h-10 rounded-full bg-[#2f5d50] text-white flex items-center justify-center"
+            >
+
+                <i class="ri-shopping-bag-3-line text-lg"></i>
+
+            </div>
+
+
+            <div>
+
+                <h1
+                    class="text-xl font-semibold tracking-tight"
+                >
+                    CarryAura
+                </h1>
+
+                <p
+                    class="text-[9px] uppercase tracking-[0.25em] text-gray-400"
+                >
+                    Bags & Lifestyle
+                </p>
+
+            </div>
+
+        </a>
+
+
+        <!-- NAVIGATION -->
+
+        <div class="flex items-center gap-6">
+
+
+            <a
+                href="/shop"
+                class="hidden sm:block text-sm font-medium hover:text-[#2f5d50] transition"
+            >
+                Shop
+            </a>
+
+
+            <% var loggedin = typeof loggedin !== 'undefined' ? loggedin : false; %>
+
+
+            <% if (loggedin) { %>
+
+
+                <a
+                    href="/cart"
+                    class="relative text-sm font-medium hover:text-[#2f5d50] transition"
+                >
+
+                    <i class="ri-shopping-cart-2-line text-lg"></i>
+
+                    <span class="hidden sm:inline ml-1">
+                        Cart
+                    </span>
+
+                </a>
+
+
+                <a
+                    href="/account"
+                    class="hidden sm:block text-sm font-medium hover:text-[#2f5d50] transition"
+                >
+                    My Account
+                </a>
+
+
+                <a
+                    href="/logout"
+                    class="px-4 py-2 rounded-full bg-[#f7e8df] text-[#9a4f36] text-sm font-medium hover:bg-[#9a4f36] hover:text-white transition"
+                >
+                    Logout
+                </a>
+
+
+            <% } else { %>
+
+
+                <a
+                    href="/users/login"
+                    class="text-sm font-medium hover:text-[#2f5d50] transition"
+                >
+                    Login
+                </a>
+
+
+                <a
+                    href="/users/register"
+                    class="px-4 py-2 rounded-full bg-[#2f5d50] text-white text-sm font-medium hover:bg-[#244a40] transition"
+                >
+                    Create Account
+                </a>
+
+
+            <% } %>
+
+
+        </div>
+
+    </nav>
